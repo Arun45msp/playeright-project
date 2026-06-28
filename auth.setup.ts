@@ -2,7 +2,7 @@ import { test as setup, expect } from '@playwright/test';
 
 setup('authenticate', async ({ page }) => {
 
-  await page.goto('/auth/login');
+  await page.goto('/auth/login',{ waitUntil: 'networkidle' });
 
   await page.locator("[data-test='email']").fill('customer@practicesoftwaretesting.com');
   await page.locator("[data-test='password']").fill('welcome01');
