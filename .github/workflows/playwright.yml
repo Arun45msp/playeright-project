@@ -27,3 +27,24 @@ jobs:
         name: playwright-report
         path: playwright-report/
         retention-days: 30
+    - name: Send Email on Failure
+      if: failure()
+      uses: dawidd6/action-send-mail@v3
+      with:
+        server_address: smtp.gmail.com
+        server_port: 465
+        username: ${{ secrets.EMAIL_USERNAME }}
+        password: ${{ secrets.EMAIL_PASSWORD }}
+        subject: "❌ Playwright Tests Failed - ${{ github.repository }}"
+        to: arunmsp45@gmail.com
+        from: arunmsp45@gmail.com
+        body: |
+          ❌ Playwright Tests Failed!
+          
+          Repository: ${{ github.repository }}
+          Branch: ${{ github.ref_name }}
+          Commit: ${{ github.sha }}
+          Triggered by: ${{ github.actor }}
+          
+          Please check the Actions tab for details:
+          https://github.com/${{ github.repository }}/actions
